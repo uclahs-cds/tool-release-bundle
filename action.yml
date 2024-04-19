@@ -22,7 +22,7 @@ runs:
       uses: actions/github-script@v7
       with:
         script: |
-          const script = require(`process.env.GITHUB_ACTION_PATH/create-tarball.js`)
+          const script = require(`${process.env.GITHUB_ACTION_PATH}/create-tarball.js`)
           await script({context, core, exec})
 
     - name: Attach file to release
