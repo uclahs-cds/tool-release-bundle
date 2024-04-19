@@ -1,0 +1,32 @@
+---
+name: "Release with submodules"
+description: "Add a release asset containing source code with submodules"
+inputs:
+  token:
+    description: >
+      Personal access token (PAT) used to checkout code and attach release
+      asset. Requires `contents: write` permissions.
+    required: false
+    default: ${{ github.token }}
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v4
+      with:
+        path: ${{ github.event.repository.name }}
+        submodules: "recursive"
+        token: ${{ inputs.token }}
+
+    - id: create-tar-file
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const script = require(`process.env.GITHUB_ACTION_PATH/create-tarball.js`)
+          await script({context, core, exec})
+
+    - name: Attach file to release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: ${{ steps.create-tar-file.outputs.tar-file-path }}
+        token: ${{ inputs.token }}
