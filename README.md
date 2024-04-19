@@ -1,20 +1,18 @@
-# Project/Repo Title
+# tool-release-bundle
 
-Template Repository for the Boutros Lab general project repos. Describe a simple overview of use/purpose here.
+Attach source archives that include all submodules to GitHub releases.
 
 ## Description
 
-An in-depth paragraph about your project and overview of use.
-
 ## License
 
-Author: Name1(username1@mednet.ucla.edu), Name2(username2@mednet.ucla.edu)
+Author: Nicholas Wiltsie (nwiltsie@mednet.ucla.edu), Yash Patel (yashpatel@mednet.ucla.edu)
 
-[This project] is licensed under the GNU General Public License version 2. See the file LICENSE.md for the terms of the GNU GPL license.
+tool-release-bundle is licensed under the GNU General Public License version 2. See the file LICENSE.md for the terms of the GNU GPL license.
 
-<one line to give the project/program's name and a brief idea of what it does.>
+A GitHub composite Action to attach source archives with submodules to releases.
 
-Copyright (C) 2023 University of California Los Angeles ("Boutros Lab") All rights reserved.
+Copyright (C) 2024 University of California Los Angeles ("Boutros Lab") All rights reserved.
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
