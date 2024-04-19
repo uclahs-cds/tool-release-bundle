@@ -2,10 +2,16 @@
 name: "Release with submodules"
 description: "Add a release asset containing source code with submodules"
 inputs:
-  token:
+  read-token:
     description: >
-      Personal access token (PAT) used to checkout code and attach release
-      asset. Requires `contents: write` permissions.
+      Personal access token (PAT) used to checkout code. Must have access to
+      all submodules.
+    required: false
+    default: ${{ github.token }}
+  write-token:
+    description: >
+      Personal access token (PAT) used to attach release asset. Requires
+      'contents: write' permissions.
     required: false
     default: ${{ github.token }}
 
@@ -16,11 +22,11 @@ runs:
       with:
         path: ${{ github.event.repository.name }}
         submodules: "recursive"
-        token: ${{ inputs.token }}
+        token: ${{ inputs.read-token }}
 
     - uses: actions/github-script@v7
       with:
-        github-token: ${{ inputs.token }}
+        github-token: ${{ inputs.write-token }}
         script: |
           const fs = require('fs')
           const script = require(`${process.env.GITHUB_ACTION_PATH}/create-tarball.js`)
