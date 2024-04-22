@@ -6,6 +6,12 @@ readonly TARBALL="$REPONAME-with-submodules-$TAG.tar.gz"
 # Create the tarball, excluding any git folders
 tar --exclude-vcs -czvf "$TARBALL" "$REPONAME"
 
+if [[ "$TAG" == *"-rc"* ]]; then
+    prerelease="--prerelease"
+else
+    prerelease=""
+fi
+
 if gh release view "$TAG"; then
     # There is an existing release
     # Attach the tarball to it
@@ -15,7 +21,7 @@ if gh release view "$TAG"; then
 else
     # There is not an existing release
     # Create the release with auto-generated notes
-    gh release create \
+    gh release create $prerelease \
         --generate-notes \
         --verify-tag \
         --title "$REPONAME $TAG" \
