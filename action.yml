@@ -4,14 +4,14 @@ description: "Add a release asset containing source code with submodules"
 inputs:
   read-token:
     description: >
-      Personal access token (PAT) used to checkout code. Must have access to
-      all submodules.
+      Token (GITHUB_TOKEN or PAT) used to checkout code. Must have
+      'contents: read' permissions for all submodules.
     required: false
     default: ${{ github.token }}
   write-token:
     description: >
       Token (GITHUB_TOKEN or PAT) used to attach release asset. Requires
-      'contents: write' permissions.
+      'contents: write' permissions for the calling repository.
     required: false
     default: ${{ github.token }}
 
