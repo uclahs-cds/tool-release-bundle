@@ -1,6 +1,6 @@
 ---
 name: "Release with submodules"
-description: "Add a release asset containing source code with submodules"
+description: "Create a release and attach a tarball containing source code with submodules"
 inputs:
   read-token:
     description: >
@@ -10,7 +10,7 @@ inputs:
     default: ${{ github.token }}
   write-token:
     description: >
-      Token (GITHUB_TOKEN or PAT) used to attach release asset. Requires
+      Token (GITHUB_TOKEN or PAT) used to manage the release. Requires
       'contents: write' permissions for the calling repository.
     required: false
     default: ${{ github.token }}
@@ -18,17 +18,22 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - if: github.event_name != 'push' || !startsWith(github.ref, 'refs/tags/')
+      name: Check pre-conditions
+      uses: actions/github-script@v7
+      with:
+        script: core.setFailed("Action can only be triggered by tag pushes!")
+
     - uses: actions/checkout@v4
       with:
         path: ${{ github.event.repository.name }}
-        submodules: "recursive"
+        submodules: recursive
         token: ${{ inputs.read-token }}
 
-    - name: "Attach release asset"
-      uses: actions/github-script@v7
-      with:
-        github-token: ${{ inputs.write-token }}
-        script: |
-          const fs = require('fs')
-          const script = require(`${process.env.GITHUB_ACTION_PATH}/create-tarball.js`)
-          await script({ context, core, exec, process, github, fs })
+    - name: Create release
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.write-token }}
+        REPONAME: ${{ github.event.repository.name }}
+        TAG: ${{ github.ref_name }}
+      run: bash "${GITHUB_ACTION_PATH}/action.sh"
