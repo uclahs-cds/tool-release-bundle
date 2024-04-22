@@ -33,6 +33,7 @@ runs:
     - name: Create release
       shell: bash
       env:
+        GH_REPO: ${{ github.repository }}
         GH_TOKEN: ${{ inputs.write-token }}
         REPONAME: ${{ github.event.repository.name }}
         TAG: ${{ github.ref_name }}
