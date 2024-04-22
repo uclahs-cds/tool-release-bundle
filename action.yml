@@ -10,7 +10,7 @@ inputs:
     default: ${{ github.token }}
   write-token:
     description: >
-      Personal access token (PAT) used to attach release asset. Requires
+      Token (GITHUB_TOKEN or PAT) used to attach release asset. Requires
       'contents: write' permissions.
     required: false
     default: ${{ github.token }}
@@ -24,7 +24,8 @@ runs:
         submodules: "recursive"
         token: ${{ inputs.read-token }}
 
-    - uses: actions/github-script@v7
+    - name: "Attach release asset"
+      uses: actions/github-script@v7
       with:
         github-token: ${{ inputs.write-token }}
         script: |
