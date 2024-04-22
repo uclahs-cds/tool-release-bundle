@@ -29,7 +29,7 @@ jobs:
 
 |Name|Required|Description |
 |-|-|-|
-| `read-token` | False (ish) | Token used to clone the repository and submodules. The default `GITHUB_TOKEN` will work if all submodules have equal or greater access - internal repositories with public or internal submodules, or public repositories with public submodules. Otherwise a personal access token with `contents: read` permission to all submodules must be used. |
+| `read-token` | False (ish) | Token used to clone the repository and submodules. The default `GITHUB_TOKEN` will work if all submodules are public. Otherwise a personal access token with `contents: read` permission to all submodules must be used. |
 | `write-token` | False | Token used to attach the source archive to the release. The default `GITHUB_TOKEN` will work if the workflow is granted `contents: write` permissions. |
 
 ## Versioning
