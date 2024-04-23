@@ -1,16 +1,16 @@
 # tool-release-bundle
 
-Attach source archives that include all submodules to GitHub releases.
+Create GitHub releases from matching tags and attach source archives that include all submodules.
 
 ## Usage
 
 ```yaml
 ---
-name: Release asset with submodules
+name: Create release with submodules
 
 on:
-  release:
-    types: [published]
+  push:
+    tags: 'v[0-9]+.[0-9]+.[0-9]*'
 
 permissions:
   contents: write
@@ -25,12 +25,14 @@ jobs:
           read-token: ${{ secrets.UCLAHS_CDS_REPO_READ_TOKEN }}
 ```
 
+The Action is triggered when a matching tag is updated on GitHub. If the tag is not associated with a release, the Action will create a new associated release with default auto-generated notes. Finally, the Action will attach a tarball named `<repo>-with-submodules-<tag>.tar.gz` to the release.
+
 ### Variables
 
-|Name|Required|Description |
-|-|-|-|
-| `read-token` | False (ish) | Token used to clone the repository and submodules. The default `GITHUB_TOKEN` will work if all submodules are public. Otherwise a personal access token with `contents: read` permission to all submodules must be used. |
-| `write-token` | False | Token used to attach the source archive to the release. The default `GITHUB_TOKEN` will work if the workflow is granted `contents: write` permissions. |
+| Name | Required | Description |
+| - | - | - |
+| `read-token` | No | Token used to clone the repository and submodules. The default `GITHUB_TOKEN` will work if all submodules are public; otherwise a personal access token with `contents: read` permission to all submodules must be used. |
+| `write-token` | No | Token used to manage the release. The default `GITHUB_TOKEN` will work if the workflow is granted `contents: write` permissions. |
 
 ## Versioning
 

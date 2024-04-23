@@ -7,7 +7,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
-## [Unreleased]
+## [v1.0.0]
 
 ### Added
 - Bootstrapped repository in preparation for initial release
+- Re-implemented logic using GitHub CLI, create releases from tags
